@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styles from "./Signin.module.css";
 import googleIcon from "../Images/google.webp";
 import styled from "styled-components";
 import {
@@ -29,48 +28,129 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { closeSignin } from "../redux/setSigninSlice";
 
-const Signin = ({ setSignInOpen, setSignUpOpen, theme }) => {
-  const OutlineBox = styled.div`
-    height: 44px;
-    border-radius: 12px;
-    border: 1px solid ${({ theme }) => theme.text_secondary};
-    color: ${({ theme }) => theme.text_secondary};
-    ${({ googleButton, theme }) =>
-      googleButton &&
-      `user-select:none;
-  gap:16px  `}
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #000000a7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
-    ${({ button, theme }) =>
-      button &&
-      `user-select:none;
+const Wrapper = styled.div`
+  width: 380px;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: ${({ theme }) => theme.card};
+  color: ${({ theme }) => theme.text_primary};
+`;
+
+const Title = styled.div`
+  font-size: 22px;
+  font-weight: 500;
+  margin: 16px 28px;
+  color: ${({ theme }) => theme.text_primary};
+`;
+
+const OutlineBox = styled.div`
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid ${({ theme }) => theme.text_secondary};
+  color: ${({ theme }) => theme.text_secondary};
+  ${({ googleButton, theme }) =>
+    googleButton &&
+    `user-select:none;
+gap:16px  `}
+
+  ${({ button, theme }) =>
+    button &&
+    `user-select:none;
 border:none;
 background:${theme.button};
-color:${theme.bg};
+color:'${theme.bg}';
 `}
 ${({ activeButton, theme }) =>
-      activeButton &&
-      ` user-select:none;
-  border:none;
-  background:${theme.primary};
-  color:white;
-  `}
-  margin:3px 20px;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 500;
-    padding: 0px 14px;
-  `;
+    activeButton &&
+    ` user-select:none;
+border:none;
+background:${theme.primary};
+color:white;
+`}
+margin:3px 20px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  padding: 0px 14px;
+`;
 
-  const Error = styled.div`
-    color: red;
-    font-size: 10px;
-    margin: 2px 26px 8px 26px;
-    display: block;
-    ${({ error, theme }) => error === "" && `display: none;`}
-  `;
+const Divider = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${({ theme }) => theme.text_secondary};
+  font-size: 14px;
+  font-weight: 600;
+`;
 
+const Line = styled.div`
+  width: 80px;
+  height: 1px;
+  border-radius: 10px;
+  margin: 0px 10px;
+  color: ${({ theme }) => theme.text_secondary};
+`;
+const TextInput = styled.input`
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  color: ${({ theme }) => theme.text_secondary};
+  outline: none;
+`;
+
+const LoginText = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text_secondary};
+  margin: 20px 20px 30px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Span = styled.span`
+  color: ${({ theme }) => theme.text_primary};
+`;
+
+const Error = styled.div`
+  color: red;
+  font-size: 10px;
+  margin: 2px 26px 8px 26px;
+  display: block;
+  ${({ error, theme }) => error === "" && `display: none;`}
+`;
+
+const ForgetPassword = styled.div`
+  color: ${({ theme }) => theme.text_secondary};
+  font-size: 13px;
+  margin: 8px 26px;
+  display: block;
+  cursor: pointer;
+  text-align: center;
+  &:hover {
+    color: ${({ theme }) => theme.text_primary};
+  }
+`;
+
+const Signin = ({ setSignInOpen, setSignUpOpen, theme }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [Loading, setLoading] = useState(false);
@@ -342,9 +422,9 @@ ${({ activeButton, theme }) =>
 
   return (
     <Modal open={true} onClose={() => dispatch(closeSignin())}>
-      <div className={styles.container}>
+      <Container>
         {!showForgetPassword ? (
-          <div className={styles.wrapper}>
+          <Wrapper>
             <CloseRounded
               style={{
                 position: "absolute",
@@ -356,7 +436,7 @@ ${({ activeButton, theme }) =>
               onClick={() => dispatch(closeSignin())}
             />
             <>
-              <div className={styles.title}>Sign In</div>
+              <Title>Sign In</Title>
               <OutlineBox
                 googleButton={TroubleshootRounded}
                 style={{ margin: "24px" }}
@@ -371,16 +451,15 @@ ${({ activeButton, theme }) =>
                   </>
                 )}
               </OutlineBox>
-              <div className={styles.divider}>
-                <div className={styles.line}>or</div>
-              </div>
+              <Divider>
+                <Line>or</Line>
+              </Divider>
               <OutlineBox style={{ marginTop: "24px" }}>
                 <EmailRounded
                   sx={{ fontSize: "20px" }}
                   style={{ paddingRight: "12px" }}
                 />
-                <input
-                  className={styles.textInput}
+                <TextInput
                   type="email"
                   placeholder="Email Id"
                   onChange={(e) => setEmail(e.target.value)}
@@ -392,8 +471,7 @@ ${({ activeButton, theme }) =>
                   sx={{ fontSize: "20px" }}
                   style={{ paddingRight: "12px" }}
                 />
-                <input
-                  className={styles.textInput}
+                <TextInput
                   type={values.showPassword ? "text" : "password"}
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
@@ -412,14 +490,13 @@ ${({ activeButton, theme }) =>
                 </IconButton>
               </OutlineBox>
               <Error error={credentialError}>{credentialError}</Error>
-              <div
-                className={styles.forgetPassword}
+              <ForgetPassword
                 onClick={() => {
                   setShowForgetPassword(true);
                 }}
               >
                 <b>Forget Password</b>
-              </div>
+              </ForgetPassword>
               <OutlineBox
                 button={"true"}
                 activeButton={!disabled}
@@ -433,10 +510,9 @@ ${({ activeButton, theme }) =>
                 )}
               </OutlineBox>
             </>
-            <div className={styles.loginText}>
+            <LoginText>
               Don't have an account ?
-              <span
-                className={styles.span}
+              <Span
                 onClick={() => {
                   setSignUpOpen(true);
                   dispatch(closeSignin());
@@ -448,11 +524,11 @@ ${({ activeButton, theme }) =>
                 }}
               >
                 Create Account
-              </span>
-            </div>
-          </div>
+              </Span>
+            </LoginText>
+          </Wrapper>
         ) : (
-          <div className={styles.wrapper}>
+          <Wrapper>
             <CloseRounded
               style={{
                 position: "absolute",
@@ -466,7 +542,7 @@ ${({ activeButton, theme }) =>
             />
             {!showOTP ? (
               <>
-                <div className={styles.title}>Reset Password</div>
+                <Title>Reset Password</Title>
                 {resettingPassword ? (
                   <div
                     style={{
@@ -490,8 +566,7 @@ ${({ activeButton, theme }) =>
                         sx={{ fontSize: "20px" }}
                         style={{ paddingRight: "12px" }}
                       />
-                      <input
-                        className={styles.textInput}
+                      <TextInput
                         placeholder="Email ID"
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
@@ -504,8 +579,7 @@ ${({ activeButton, theme }) =>
                         sx={{ fontSize: "20px" }}
                         style={{ paddingRight: "12px" }}
                       />
-                      <input
-                        className={styles.textInput}
+                      <TextInput
                         placeholder="New Password"
                         type="text"
                         onChange={(e) => setNewpassword(e.target.value)}
@@ -516,8 +590,7 @@ ${({ activeButton, theme }) =>
                         sx={{ fontSize: "20px" }}
                         style={{ paddingRight: "12px" }}
                       />
-                      <input
-                        className={styles.textInput}
+                      <TextInput
                         placeholder="Confirm Password"
                         type={values.showPassword ? "text" : "password"}
                         onChange={(e) => setConfirmedpassword(e.target.value)}
@@ -552,10 +625,9 @@ ${({ activeButton, theme }) =>
                         "Submit"
                       )}
                     </OutlineBox>
-                    <div className={styles.loginText}>
+                    <LoginText>
                       Don'nt have an account ?
-                      <span
-                        className={styles.span}
+                      <Span
                         onClick={() => {
                           setSignUpOpen(true);
                           dispatch(closeSignin());
@@ -567,8 +639,8 @@ ${({ activeButton, theme }) =>
                         }}
                       >
                         Create Account
-                      </span>
-                    </div>
+                      </Span>
+                    </LoginText>
                   </>
                 )}
               </>
@@ -581,9 +653,9 @@ ${({ activeButton, theme }) =>
                 reason="FORGOTPASSWORD"
               />
             )}
-          </div>
+          </Wrapper>
         )}
-      </div>
+      </Container>
     </Modal>
   );
 };
