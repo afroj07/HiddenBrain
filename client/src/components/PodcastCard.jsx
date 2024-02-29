@@ -1,11 +1,11 @@
 import React from "react";
-import Avatar from "@mui/material";
+import { Avatar } from "@mui/material";
 import styled from "styled-components";
 import FavoriteICon from "@mui/icons-material/Favorite";
 import { useState } from "react";
 import { IconButton } from "@mui/material";
 import { favoritePodcast } from "../api";
-import { UseDispatch, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { openSignin } from "../redux/setSigninSlice";
 import HeadphonesIcon from "@mui/icons-material/Headphones";

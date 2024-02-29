@@ -22,7 +22,7 @@ export const verifyOtp = async(otp)=>await API.get(`/auth/verifyotp?code=${otp}`
 export const resetPassword = async(email,password)=> API.put(`/auth/forgetpassword`,{email,password});
 
 //user api
-export const getUser = async(token)=>{
+export const getUsers = async(token)=>{
   await API.get('/user', {headers: {"Authorization":`Bearer ${token}`}},{
   withCredentials:true
 });
