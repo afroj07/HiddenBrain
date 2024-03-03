@@ -86,7 +86,7 @@ const Dashboard = ({ setSignInOpen }) => {
   const [news, setNews] = useState([]);
   const [sports, setsports] = useState([]);
   const [crime, setCrime] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   //user
   const { currentUser } = useSelector((state) => state.user);
