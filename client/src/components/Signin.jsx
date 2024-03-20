@@ -169,7 +169,7 @@ const Signin = ({ setSignInOpen, setSignUpOpen, theme }) => {
   const [samepassword, setSamepassword] = useState("");
   const [newpassword, setNewpassword] = useState("");
   const [confirmedpassword, setConfirmedpassword] = useState("");
-  const [passwordCorrect, setPasswordCurrect] = useState(false);
+  const [passwordCorrect, setPasswordCorrect] = useState(false);
   const [resetDisabled, setResetDisabled] = useState(true);
   const [resettingPassword, setResettingPassword] = useState(false);
   const dispatch = useDispatch();
@@ -257,23 +257,23 @@ const Signin = ({ setSignInOpen, setSignUpOpen, theme }) => {
   const validatePassword = () => {
     if (newpassword.length < 8) {
       setSamepassword("Password must be atleast 8 chaacters long!");
-      setPasswordCurrect(false);
+      setPasswordCorrect(false);
     } else if (newpassword.length > 16) {
       setSamepassword("Passord must be less than 16 characters long!");
-      setPasswordCurrect(false);
+      setPasswordCorrect(false);
     } else if (
       !newpassword.match(/[a-z]/g) ||
       !newpassword.match(/[A-Z]/g) ||
       !newpassword.match(/[0-9]/g) ||
       !newpassword.match(/[^a-zA-Z\d]/g)
     ) {
-      setPasswordCurrect(false);
+      setPasswordCorrect(false);
       setSamepassword(
         "Password must contain atleast one lowercase, uppercase,number and special character!"
       );
     } else {
       setSamepassword("");
-      setPasswordCurrect(true);
+      setPasswordCorrect(true);
     }
   };
 
